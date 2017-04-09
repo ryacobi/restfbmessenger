@@ -136,6 +136,17 @@ public interface SendOperations {
     /**
      * Sends the given message to the user.
      *
+     * @param recipient the recipient
+     * @param message   the message
+     * @param tag message tag
+     * @return the {@code SendResponse}
+     * @throws FacebookException in case an error occurs while performing the Facebook API call
+     */
+    SendResponse message(MessageRecipient recipient, Message message, MessageTagEnum tag) throws FacebookException;
+
+    /**
+     * Sends the given message to the user.
+     *
      * @param recipient        the recipient
      * @param message          the message
      * @param notificationType the push notification type
@@ -143,6 +154,18 @@ public interface SendOperations {
      * @throws FacebookException in case an error occurs while performing the Facebook API call
      */
     SendResponse message(MessageRecipient recipient, Message message, NotificationTypeEnum notificationType) throws FacebookException;
+
+    /**
+     * Sends the given message to the user.
+     *
+     * @param recipient        the recipient
+     * @param message          the message
+     * @param notificationType the push notification type
+     * @param tag message tag
+     * @return the {@code SendResponse}
+     * @throws FacebookException in case an error occurs while performing the Facebook API call
+     */
+    SendResponse message(MessageRecipient recipient, Message message, NotificationTypeEnum notificationType, MessageTagEnum tag) throws FacebookException;
 
     /**
      * Sends the given text message to the user.
@@ -157,6 +180,17 @@ public interface SendOperations {
     /**
      * Sends the given text message to the user.
      *
+     * @param recipient the recipient
+     * @param text      the text message
+     * @param tag message tag
+     * @return the {@code SendResponse}
+     * @throws FacebookException in case an error occurs while performing the Facebook API call
+     */
+    SendResponse textMessage(MessageRecipient recipient, String text, MessageTagEnum tag) throws FacebookException;
+
+    /**
+     * Sends the given text message to the user.
+     *
      * @param recipient        the recipient
      * @param text             the text message
      * @param notificationType the push notification type
@@ -164,6 +198,18 @@ public interface SendOperations {
      * @throws FacebookException in case an error occurs while performing the Facebook API call
      */
     SendResponse textMessage(MessageRecipient recipient, String text, NotificationTypeEnum notificationType) throws FacebookException;
+
+    /**
+     * Sends the given text message to the user.
+     *
+     * @param recipient        the recipient
+     * @param text             the text message
+     * @param notificationType the push notification type
+     * @param tag message tag
+     * @return the {@code SendResponse}
+     * @throws FacebookException in case an error occurs while performing the Facebook API call
+     */
+    SendResponse textMessage(MessageRecipient recipient, String text, NotificationTypeEnum notificationType, MessageTagEnum tag) throws FacebookException;
 
     /**
      * Sends the given attachment to the user.
@@ -298,6 +344,34 @@ public interface SendOperations {
             throws FacebookException;
 
     /**
+     * Sends the given text message and quick replies to the user.
+     *
+     * @param recipient        the recipient
+     * @param text             the text message
+     * @param quickReplies     the quick replies
+     * @param tag message tag
+     * @param notificationType the push notification type
+     * @return the {@code SendResponse}
+     * @throws FacebookException in case an error occurs while performing the Facebook API call
+     */
+    SendResponse quickReplies(MessageRecipient recipient, String text, List<QuickReply> quickReplies, NotificationTypeEnum notificationType, MessageTagEnum tag)
+            throws FacebookException;
+
+
+    /**
+     * Sends the given text message and quick replies to the user.
+     *
+     * @param recipient        the recipient
+     * @param text             the text message
+     * @param quickReplies     the quick replies
+     * @param tag message tag
+     * @return the {@code SendResponse}
+     * @throws FacebookException in case an error occurs while performing the Facebook API call
+     */
+    SendResponse quickReplies(MessageRecipient recipient, String text, List<QuickReply> quickReplies, MessageTagEnum tag)
+            throws FacebookException;
+
+    /**
      * Sends the given media attachment and quick replies to the user.
      *
      * @param recipient    the recipient
@@ -382,6 +456,17 @@ public interface SendOperations {
     /**
      * Sends the given generic template to the user.
      *
+     * @param recipient       the recipient
+     * @param genericTemplate the generic template
+     * @param tag the message tag
+     * @return the {@code SendResponse}
+     * @throws FacebookException in case an error occurs while performing the Facebook API call
+     */
+    SendResponse genericTemplate(MessageRecipient recipient, GenericTemplatePayload genericTemplate, MessageTagEnum tag) throws FacebookException;
+
+    /**
+     * Sends the given generic template to the user.
+     *
      * @param recipient        the recipient
      * @param genericTemplate  the generic template
      * @param notificationType the push notification type
@@ -389,6 +474,19 @@ public interface SendOperations {
      * @throws FacebookException in case an error occurs while performing the Facebook API call
      */
     SendResponse genericTemplate(MessageRecipient recipient, GenericTemplatePayload genericTemplate, NotificationTypeEnum notificationType)
+            throws FacebookException;
+
+    /**
+     * Sends the given generic template to the user.
+     *
+     * @param recipient        the recipient
+     * @param genericTemplate  the generic template
+     * @param notificationType the push notification type
+     * @param tag the message tag
+     * @return the {@code SendResponse}
+     * @throws FacebookException in case an error occurs while performing the Facebook API call
+     */
+    SendResponse genericTemplate(MessageRecipient recipient, GenericTemplatePayload genericTemplate, NotificationTypeEnum notificationType, MessageTagEnum tag)
             throws FacebookException;
 
     /**

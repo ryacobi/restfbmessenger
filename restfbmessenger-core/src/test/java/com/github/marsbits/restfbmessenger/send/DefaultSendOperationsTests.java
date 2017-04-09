@@ -18,6 +18,7 @@ package com.github.marsbits.restfbmessenger.send;
 
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
+import com.restfb.types.MessageTag;
 import com.restfb.types.send.Bubble;
 import com.restfb.types.send.ButtonTemplatePayload;
 import com.restfb.types.send.CallButton;
@@ -57,11 +58,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static com.github.marsbits.restfbmessenger.send.DefaultSendOperations.MESSAGES_PATH;
-import static com.github.marsbits.restfbmessenger.send.DefaultSendOperations.MESSAGE_PARAM_NAME;
-import static com.github.marsbits.restfbmessenger.send.DefaultSendOperations.NOTIFICATION_TYPE_PARAM_NAME;
-import static com.github.marsbits.restfbmessenger.send.DefaultSendOperations.RECIPIENT_PARAM_NAME;
-import static com.github.marsbits.restfbmessenger.send.DefaultSendOperations.SENDER_ACTION_PARAM_NAME;
+import static com.github.marsbits.restfbmessenger.send.DefaultSendOperations.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -168,6 +165,15 @@ public class DefaultSendOperationsTests {
     }
 
     @Test
+    public void testMessageWithTag() {
+        Message message = new Message("Hello!");
+        sendOperations.message(messageRecipient, message, MessageTagEnum.ISSUE_RESOLUTION);
+        verifySend(messageRecipient,
+                Parameter.with(TAG_PARAM_NAME, MessageTagEnum.ISSUE_RESOLUTION),
+                Parameter.with(MESSAGE_PARAM_NAME, message));
+    }
+
+    @Test
     public void testTextMessage() {
         String text = "Hello!";
         sendOperations.textMessage(messageRecipient, text);
@@ -182,6 +188,17 @@ public class DefaultSendOperationsTests {
         Message message = new Message(text);
         verifySend(messageRecipient,
                 Parameter.with(NOTIFICATION_TYPE_PARAM_NAME, NotificationTypeEnum.NO_PUSH),
+                Parameter.with(MESSAGE_PARAM_NAME, message));
+    }
+
+
+    @Test
+    public void testTextMessageWithTag() {
+        String text = "Hello!";
+        sendOperations.textMessage(messageRecipient, text, MessageTagEnum.RESERVATION_UPDATE);
+        Message message = new Message(text);
+        verifySend(messageRecipient,
+                Parameter.with(TAG_PARAM_NAME, MessageTagEnum.RESERVATION_UPDATE),
                 Parameter.with(MESSAGE_PARAM_NAME, message));
     }
 
@@ -309,6 +326,19 @@ public class DefaultSendOperationsTests {
                 Parameter.with(MESSAGE_PARAM_NAME, message));
     }
 
+
+    @Test
+    public void testQuickRepliesWithTextMessageAndTag() {
+        String text = "Hello!";
+        List<QuickReply> quickReplies = createQuickReplies();
+        sendOperations.quickReplies(messageRecipient, text, quickReplies, MessageTagEnum.SHIPPING_UPDATE);
+        Message message = new Message(text);
+        message.addQuickReplies(quickReplies);
+        verifySend(messageRecipient,
+                Parameter.with(TAG_PARAM_NAME, MessageTagEnum.SHIPPING_UPDATE),
+                Parameter.with(MESSAGE_PARAM_NAME, message));
+    }
+
     @Test
     public void testQuickRepliesWithMediaAttachment() {
         MediaAttachment attachment = createMediaAttachment();
@@ -392,6 +422,17 @@ public class DefaultSendOperationsTests {
         Message message = new Message(attachment);
         verifySend(messageRecipient,
                 Parameter.with(NOTIFICATION_TYPE_PARAM_NAME, NotificationTypeEnum.NO_PUSH),
+                Parameter.with(MESSAGE_PARAM_NAME, message));
+    }
+
+    @Test
+    public void testGenericTemplateWithTag() {
+        GenericTemplatePayload genericTemplate = createGenericTemplate();
+        sendOperations.genericTemplate(messageRecipient, genericTemplate, MessageTagEnum.RESERVATION_UPDATE);
+        TemplateAttachment attachment = new TemplateAttachment(genericTemplate);
+        Message message = new Message(attachment);
+        verifySend(messageRecipient,
+                Parameter.with(TAG_PARAM_NAME, MessageTagEnum.RESERVATION_UPDATE),
                 Parameter.with(MESSAGE_PARAM_NAME, message));
     }
 
